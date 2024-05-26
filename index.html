@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script src="app.js"></script>
+
+    <div class="container">
+        <h1 class="my-4">Upcoming Events</h1>
+        <div id="eventList" class="list-group">
+            <!-- Мероприятия будут добавлены здесь динамически -->
+        </div>
+    </div>
+    
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="user-actions">
+                    <button id="registerButton" class="btn btn-primary" style="display: none;" onclick="window.location.href = 'register.html'">Register</button>
+                    <button id="loginButton" class="btn btn-primary" onclick="window.location.href = 'login.html'">Login</button>
+                    <span id="username" style="display: none;"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="user-actions text-right">
+                    <button class="btn btn-success" onclick="window.location.href = 'myBookings.html'">My Bookings</button>
+                    <button id="signout_button" class="btn btn-danger" style="display: none;" onclick="signOut()">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ссылка на скрипт Google API -->
+    <script src="https://apis.google.com/js/api.js"></script>
+    <!-- Ссылка на ваш скрипт googleAuth.js -->
+    <script src="googleAuth.js"></script>
+    
+    <script src="app.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const registerButton = document.getElementById('registerButton');
+            const loginButton = document.getElementById('loginButton');
+            const usernameSpan = document.getElementById('username');
+
+            if (currentUser) {
+                registerButton.style.display = 'block'; // Показываем кнопку регистрации для авторизованных пользователей
+                loginButton.style.display = 'none'; // Скрываем кнопку входа
+                usernameSpan.textContent = currentUser.username; // Отображаем имя пользователя
+                usernameSpan.style.display = 'inline'; // Показываем имя пользователя
+            }
+        });
+    </script>
+    
+    <script>
+        function updateSigninStatus(isSignedIn) {
+            const signoutButton = document.getElementById('signout_button');
+            if (isSignedIn) {
+                signoutButton.style.display = 'block';
+            } else {
+                signoutButton.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
